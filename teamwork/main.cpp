@@ -55,6 +55,26 @@ int main(int argc, char *argv[]) {
         }
     });
 
+    // 創建第三個頁籤
+    QWidget *tab3 = new QWidget;
+    QVBoxLayout *layout3 = new QVBoxLayout;
+    QPushButton *changeFontButton = new QPushButton("Choose font");
+
+    // 點擊按鈕來選擇字體
+    QObject::connect(changeFontButton, &QPushButton::clicked, [&]() {
+        bool ok;
+        QFont font = QFontDialog::getFont(&ok, label1->font(), tab3, "Select Font");
+        if (ok) {
+            label1->setFont(font);
+
+            // 保存選擇的字體
+            settings.setValue("labelFont", font);
+        }
+    });
+
+    layout3->addWidget(changeFontButton);
+    tab3->setLayout(layout3);
+
     layout2->addWidget(changeColorButton);
     tab2->setLayout(layout2);
 
