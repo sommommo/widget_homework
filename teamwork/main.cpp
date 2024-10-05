@@ -37,6 +37,26 @@ int main(int argc, char *argv[]) {
     layout1->addWidget(label1);
     tab1->setLayout(layout1);
 
+    // 創建第二個頁籤
+    QWidget *tab2 = new QWidget;
+    QVBoxLayout *layout2 = new QVBoxLayout;
+    QPushButton *changeColorButton = new QPushButton("Choose color");
+
+    // 點擊按鈕來選擇顏色
+    QObject::connect(changeColorButton, &QPushButton::clicked, [&]() {
+        QColor color = QColorDialog::getColor(savedColor, tab2, "Select Text Color");
+        if (color.isValid()) {
+            QPalette palette = label1->palette();
+            palette.setColor(QPalette::WindowText, color);
+            label1->setPalette(palette);
+
+            // 保存選擇的顏色
+            settings.setValue("labelColor", color);
+        }
+    });
+
+    layout2->addWidget(changeColorButton);
+    tab2->setLayout(layout2);
 
 
     // 將頁籤加入 QTabWidget
