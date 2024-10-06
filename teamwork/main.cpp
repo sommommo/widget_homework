@@ -78,6 +78,21 @@ int main(int argc, char *argv[]) {
     layout2->addWidget(changeColorButton);
     tab2->setLayout(layout2);
 
+    // 創建第四個頁籤
+    QWidget *tab4 = new QWidget;
+    QVBoxLayout *layout4 = new QVBoxLayout;
+    QPushButton *openFileButton = new QPushButton("Open File");
+
+    // 點擊按鈕來選擇檔案
+    QObject::connect(openFileButton, &QPushButton::clicked, [&]() {
+        QString filePath = QFileDialog::getOpenFileName(tab4, "Select a File", QString(), "All Files (*.*)");
+        if (!filePath.isEmpty()) {
+            label1->setText(filePath); // 在第一個頁籤顯示選擇的檔案路徑
+        }
+    });
+
+    layout4->addWidget(openFileButton);
+    tab4->setLayout(layout4);
 
     // 將頁籤加入 QTabWidget
     tabWidget->addTab(tab1, "Tab 1");
